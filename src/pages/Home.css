@@ -1,0 +1,132 @@
+.board {
+  display: flex;
+  align-items: flex-end;
+  height: 500px;
+  gap: 12px;
+  padding: 32px;
+  background: #f5f5f5;
+}
+
+.board-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 40px;
+  min-height: 100px;
+  background: #fff;
+  border: 2px solid #bbb;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding-bottom: 8px;
+}
+
+.board-space {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  margin: 2px 0;
+  border: 1px solid #bbb;
+}
+
+.board-label {
+  margin-top: 8px;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.controls {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding-left: 32px; /* Match the board's left padding */
+}
+
+.roll-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.roll-btn {
+  font-size: 1.3em;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: 2px solid #1976d2;
+  background: #2196f3;
+  color: #fff;
+  font-weight: bold;
+  margin-right: 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.roll-btn:hover {
+  background: #1565c0;
+}
+
+.dice-row {
+  display: flex;
+  gap: 8px;
+}
+
+.die {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  font-size: 2em;
+  text-align: center;
+  line-height: 1;
+  font-weight: bold;
+  box-shadow: none;
+  margin: 0 2px;
+}
+
+.pairings {
+  display: flex;
+  flex-direction: row;      /* Lay out buttons in a row */
+  align-items: center;
+  gap: 12px;                /* Space between buttons */
+  margin-top: 8px;
+}
+
+.pairings > div {
+  margin-right: 12px;       /* Space between label and first button */
+}
+
+.pair-btn {
+  margin-right: 8px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid #888;
+  background: #eee;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.pair-btn.selected, .pair-btn:disabled {
+  background: #b3e5fc;
+  color: #222;
+  cursor: default;
+}
+
+.runner-marker {
+  color: #d32f2f;
+  font-size: 1.5em;
+  line-height: 1;
+  display: block;
+  text-align: center;
+}
+
+.after-choice-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
