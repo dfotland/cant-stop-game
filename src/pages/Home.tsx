@@ -20,7 +20,6 @@ function getPairings(dice: number[]) {
   ];
 }
 
-
 // SVGs for dice faces 1-6
 const DiceSVGs = [
   // 1
@@ -70,108 +69,58 @@ const DiceSVGs = [
   </svg>,
 ];
 
-type Runners = Record<number, number>; // column -> position (0 = bottom)
-
-const initialRunners: Runners = {};
-
-const Home: React.FC = () => {
+const Home = () => {
   const [dice, setDice] = useState<number[]>([]);
   const [pairings, setPairings] = useState<number[][]>([]);
-  const [selectedPair, setSelectedPair] = useState<number[] | null>(null);
-  const [runners, setRunners] = useState<Runners>(initialRunners);
+  const [markers] = useState([
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+  ]);
 
-  // Roll dice
-  const handleRoll = () => {
+  const handleRollDice = () => {
     const newDice = [rollDie(), rollDie(), rollDie(), rollDie()];
     setDice(newDice);
     setPairings(getPairings(newDice));
-    setSelectedPair(null);
-  };
-
-  // Choose a pair and move runners
-  const handleSelectPair = (pair: number[]) => {
-    setSelectedPair(pair);
-    setRunners(prev => {
-      const updated = { ...prev };
-      pair.forEach(sum => {
-        // Move runner up by 1, or start at 0 if not present
-        updated[sum] = (updated[sum] ?? 0) + 1;
-        // Cap at the top of the column
-        if (updated[sum] > COLUMN_HEIGHTS[sum]) {
-          updated[sum] = COLUMN_HEIGHTS[sum];
-        }
-      });
-      return updated;
-    });
-  };
-
-  // Stop: In a full game, this would save progress and reset runners
-  const handleStop = () => {
-    setRunners({});
-    setDice([]);
-    setPairings([]);
-    setSelectedPair(null);
-    // TODO: Save progress for the player
-  };
-
-  // Roll again: just roll new dice, keep runners
-  const handleRollAgain = () => {
-    handleRoll();
   };
 
   return (
     <div>
+      {/* Existing board rendering */}
       <div className="board">
         {COLUMN_LABELS.map((label) => (
           <div key={label} className="board-column">
-            {Array.from({ length: COLUMN_HEIGHTS[label] }).map((_, i) => {
-              // Runner marker if runner is at this position (from bottom)
-              const runnerPos = runners[label] ?? 0;
-              const isRunner = runnerPos === COLUMN_HEIGHTS[label] - i;
-              return (
-                <div key={i} className="board-space">
-                  {isRunner && <span className="runner-marker">⬤</span>}
-                </div>
-              );
-            })}
+            {Array.from({ length: COLUMN_HEIGHTS[label] }).map((_, i) => (
+              <div key={i} className="board-space"></div>
+            ))}
             <span className="board-label">{label}</span>
           </div>
         ))}
       </div>
+
+      {/* Existing controls rendering */}
       <div className="controls">
         <div className="roll-row">
-          <button className="roll-btn" onClick={handleRoll} disabled={pairings.length > 0 && !selectedPair}>
-            Roll Dice
-          </button>
+          <button className="roll-btn" onClick={handleRollDice}>Roll Dice</button>
           <div className="dice-row">
-            {dice.map((d, i) => (
-              <span key={i} className="die" title={d.toString()}>
-                {d >= 1 && d <= 6 ? DiceSVGs[d - 1] : d}
-              </span>
+            {dice.map((die, index) => (
+              <span key={index} className="die">{DiceSVGs[die - 1]}</span>
+            ))}
+          </div>
+          {/* New markers section */}
+          <div className="markers">
+            {markers.map((marker) => (
+              <div key={marker.id} className="marker">⬤</div>
             ))}
           </div>
         </div>
-        {pairings.length > 0 && (
-          <div className="pairings">
-            <div>Choose a pair:</div>
-            {pairings.map((pair, idx) => (
-              <button
-                key={idx}
-                className={`pair-btn${selectedPair === pair ? ' selected' : ''}`}
-                onClick={() => handleSelectPair(pair)}
-                disabled={!!selectedPair}
-              >
-                {pair[0]} &amp; {pair[1]}
-              </button>
-            ))}
-          </div>
-        )}
-        {selectedPair && (
-          <div className="after-choice-buttons">
-            <button className="pair-btn" onClick={handleStop}>Stop</button>
-            <button className="pair-btn" onClick={handleRollAgain}>Roll Again</button>
-          </div>
-        )}
+        <div className="pairings">
+          {pairings.map((pair, index) => (
+            <div key={index} className="pair-btn">
+              {pair[0]} + {pair[1]}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

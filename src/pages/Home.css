@@ -89,21 +89,25 @@
   margin: 0 2px;
 }
 
-.pairings {
+.markers {
   display: flex;
-  flex-direction: row;      /* Lay out buttons in a row */
-  align-items: center;
-  gap: 12px;                /* Space between buttons */
-  margin-top: 8px;
+  gap: 12px;
+  margin-left: 24px; /* Align markers to the right of the dice */
 }
 
-.pairings > div {
-  margin-right: 12px;       /* Space between label and first button */
+.marker {
+  font-size: 1.5em;
+  color: black;
+}
+
+.pairings {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
 }
 
 .pair-btn {
-  margin-right: 8px;
-  padding: 4px 12px;
+  padding: 8px 16px;
   border-radius: 6px;
   border: 1px solid #888;
   background: #eee;
