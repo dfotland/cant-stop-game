@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Home.css';
+import Board from '../components/Board';
 
 const COLUMN_LABELS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 const COLUMN_HEIGHTS: Record<number, number> = {
@@ -72,10 +73,10 @@ const DiceSVGs = [
 const Home = () => {
   const [dice, setDice] = useState<number[]>([]);
   const [pairings, setPairings] = useState<number[][]>([]);
-  const [markers] = useState([
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
+  const [markers, setMarkers] = useState([
+    { id: 1, column: null, position: null },
+    { id: 2, column: null, position: null },
+    { id: 3, column: null, position: null },
   ]);
 
   const handleRollDice = () => {
@@ -84,19 +85,30 @@ const Home = () => {
     setPairings(getPairings(newDice));
   };
 
+  const handlePairingClick = (pair: number[]) => {
+    setMarkers((prevMarkers) => {
+      const updatedMarkers = [...prevMarkers];
+
+      pair.forEach((column) => {
+        const markerInColumn = updatedMarkers.find((marker) => marker.column === column);
+
+        if (!markerInColumn) {
+          const availableMarker = updatedMarkers.find((marker) => marker.column === null);
+          if (availableMarker) {
+            availableMarker.column = column;
+            availableMarker.position = 0; // Start at the bottom
+          }
+        }
+      });
+
+      return updatedMarkers;
+    });
+  };
+
   return (
     <div>
-      {/* Existing board rendering */}
-      <div className="board">
-        {COLUMN_LABELS.map((label) => (
-          <div key={label} className="board-column">
-            {Array.from({ length: COLUMN_HEIGHTS[label] }).map((_, i) => (
-              <div key={i} className="board-space"></div>
-            ))}
-            <span className="board-label">{label}</span>
-          </div>
-        ))}
-      </div>
+      {/* Board rendering */}
+      <Board COLUMN_LABELS={COLUMN_LABELS} COLUMN_HEIGHTS={COLUMN_HEIGHTS} markers={markers} />
 
       {/* Existing controls rendering */}
       <div className="controls">
@@ -107,16 +119,14 @@ const Home = () => {
               <span key={index} className="die">{DiceSVGs[die - 1]}</span>
             ))}
           </div>
-          {/* New markers section */}
-          <div className="markers">
-            {markers.map((marker) => (
-              <div key={marker.id} className="marker">⬤</div>
-            ))}
-          </div>
         </div>
         <div className="pairings">
           {pairings.map((pair, index) => (
-            <div key={index} className="pair-btn">
+            <div
+              key={index}
+              className="pair-btn"
+              onClick={() => handlePairingClick(pair)}
+            >
               {pair[0]} + {pair[1]}
             </div>
           ))}

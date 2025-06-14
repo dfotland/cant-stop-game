@@ -1,0 +1,52 @@
+.board-container {
+  display: flex; /* Align board and markers horizontally */
+  flex-direction: row;
+  align-items: flex-start; /* Align items at the top */
+  gap: 16px; /* Space between board and markers */
+}
+
+.board {
+  display: flex;
+  align-items: flex-end;
+  height: 500px;
+  gap: 12px;
+  padding: 32px;
+  background: #f5f5f5;
+}
+
+.board-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 40px;
+  min-height: 100px;
+  background: #fff;
+  border: 2px solid #bbb;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  padding-bottom: 8px;
+}
+
+.board-space {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  margin: 2px 0;
+  border: 1px solid #bbb;
+}
+
+.board-label {
+  margin-top: 8px;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.board-markers {
+  display: flex; /* Render markers vertically */
+  flex-direction: column;
+  gap: 8px;
+  margin-top:auto;
+  margin-bottom:32px;
+}
