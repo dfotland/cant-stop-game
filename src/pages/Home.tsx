@@ -2,11 +2,6 @@ import React, { useState } from 'react';
 import './Home.css';
 import Board from '../components/Board';
 
-const COLUMN_LABELS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-const COLUMN_HEIGHTS: Record<number, number> = {
-  2: 3, 3: 5, 4: 7, 5: 9, 6: 11, 7: 13, 8: 11, 9: 9, 10: 7, 11: 5, 12: 3,
-};
-
 function rollDie() {
   return Math.floor(Math.random() * 6) + 1;
 }
@@ -108,7 +103,7 @@ const Home = () => {
   return (
     <div>
       {/* Board rendering */}
-      <Board COLUMN_LABELS={COLUMN_LABELS} COLUMN_HEIGHTS={COLUMN_HEIGHTS} markers={markers} />
+      <Board markers={markers} />
 
       {/* Existing controls rendering */}
       <div className="controls">

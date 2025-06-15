@@ -50,11 +50,6 @@
   margin-left: 24px; /* Align markers to the right of the dice */
 }
 
-.marker {
-  font-size: 1.5em;
-  color: black;
-}
-
 .pairings {
   display: flex;
   gap: 12px;

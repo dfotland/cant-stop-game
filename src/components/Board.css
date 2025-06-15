@@ -45,8 +45,14 @@
 
 .board-markers {
   display: flex; /* Render markers vertically */
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 8px;
   margin-top:auto;
   margin-bottom:32px;
 }
+
+.marker {
+  font-size: 1.5em;
+  color: black;
+  }
+  
